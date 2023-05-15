@@ -1,0 +1,44 @@
+<?php
+// Step 1: Establish a database connection
+$servername = "localhost"; // Replace with your server name
+$username = "your_username"; // Replace with your MySQL username
+$password = "your_password"; // Replace with your MySQL password
+$dbname = "your_database"; // Replace with your database name
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Step 2: Retrieve employee details from the database
+$sql = "SELECT * FROM employees";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    // Step 3: Display employee details
+    echo "<table>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Department</th>
+            </tr>";
+
+    while ($row = $result->fetch_assoc()) {
+        echo "<tr>
+                <td>".$row["id"]."</td>
+                <td>".$row["name"]."</td>
+                <td>".$row["email"]."</td>
+                <td>".$row["department"]."</td>
+            </tr>";
+    }
+
+    echo "</table>";
+} else {
+    echo "No employee details found.";
+}
+
+// Step 4: Close the database connection
+$conn->close();
+?>
+
